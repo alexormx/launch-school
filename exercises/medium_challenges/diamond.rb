@@ -5,21 +5,20 @@ class Diamond
       generate_code(letter_code)
     end
 
+    private
     def generate_code(code)
       result = []
-      insertions = code - 65
-      puts insertions
-      0.upto(insertions) do |idx|
-        str = idx == 0 ? "A" : (65 + idx).chr 
-        result << str
-      end
-      result
+      result << " " * (code - 65) + "A" + " " * (code - 65)
+      66.upto(code) { |idx| result << get_line(code, idx) }
+      (code - 1).downto(66) {|idx| result << get_line(code, idx) }
+      result << " " * (code - 65) + "A" + " " * (code - 65) if code > 65
+      result.join("\n") + "\n"
+    end
+
+    def get_line(code, idx)
+      initial = " " * (code - idx)
+      mid = " " * (((idx - 65) * 2) - 1)
+      initial + idx.chr + mid + idx.chr + initial
     end
   end
 end
-
-a = Diamond.make_diamond("A")
-puts a
-
-
-
